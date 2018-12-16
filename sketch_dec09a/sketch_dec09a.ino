@@ -51,19 +51,24 @@ void turnPomodorroOn(){
 }
 
 void checkSittinSensor(){
+  int senseResults = digitalRead(WEIGHT_SENSE);
   if (pomodorroStatus == true){
-    int senseResults = digitalRead(WEIGHT_SENSE);
     if (senseResults == LOW) {
       sittingStatus = true;
     }
     else {
       sittingStatus = false;
     }
+  } else { // turn on pomodorro automatically if sitting 
+    if (senseResults == LOW) {
+      pomodorroStatus = true;
+      sittingStatus = true;
+    }
   }
 }
 
 void pomTimer(){
-  if (pomodorroStatus == true) { // only added in to make code stringest
+  if (pomodorroStatus == true) { // only added in to make code stringent
     count++;
     // toggle if exceeded time
     if (working == false){
